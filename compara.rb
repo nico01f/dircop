@@ -15,15 +15,17 @@ path = '/opt/autentia/www'
 default_user = 'root'
 default_port = '14225'
 
-CONN.each do |k,v|
-  Net::SSH.start(v, default_user, :port => default_port) do |ssh|
+CONN.each do |web,srv|
+  Net::SSH.start(srv, default_user, :port => default_port) do |ssh|
     DIR_LIST.each { |dir|
       output = ssh.exec!("[ -d #{path}/#{dir} ] && OK")
       if output.include? "OK"
-        print "[#{k}] | [INFO] - ".green
+        # Verbose mode
+        print "[#{web}] [INFO] - ".green
         puts "Directorio coincide"
       else
-        print "[#{k}] | [WARN] - ".red
+        # Verbose mode
+        print "[#{web}] [WARN] - ".red
         puts "Revisar directorio en: #{path}/#{dir}\n"
       end
     }
