@@ -1,27 +1,31 @@
+#!/usr/bin/ruby
+
 require 'yaml'
 require 'colorize'
 require 'net/ssh'
 
-# Arreglo de conexion
+# Servers arrays
 CONN = YAML.load_file('servers.yaml') unless defined? CONN
-#Listado de directorios a buscar
+
+# Directories arrays
 DIR_LIST = YAML.load_file('directorios.yaml') unless defined? DIR_LIST
 
-serv = CONN['web01']
-port = CONN['puerto'].to_s
-user = 'root'
+# TO-DO: Loop servers
+path = '/opt/autentia/www'
+default_user = 'root'
+default_port = '14225'
 
-
-Net::SSH.start(serv, :port=>port, :username=>'root') do |ssh|
-  DIR_LIST.each { |dir|
-    if Dir.exist?(dir) == false
-      print "[ELIMINAR] - ".red
-      puts "Directorio: #{dir} no existe"
-    else
-      print "[MANTENER] - ".green
-      puts "Directorio: #{dir} existe"
-    end
-
-
+CONN.each do |k,v|
+  Net::SSH.start(v, default_user, :port => default_port) do |ssh|
+    DIR_LIST.each { |dir|
+      output = ssh.exec!("[ -d #{path}/#{dir} ] && OK")
+      if output.include? "OK"
+        print "[#{k}] | [INFO] - ".green
+        puts "Directorio coincide"
+      else
+        print "[#{k}] | [WARN] - ".red
+        puts "Revisar directorio en: #{path}/#{dir}\n"
+      end
     }
+  end
 end
