@@ -1,14 +1,22 @@
 require 'yaml'
 require ''
 # Arreglo de conexion
-CONEXION = YAML.load_file('servers.yaml') unless defined? CONEXION
+CONN = YAML.load_file('servers.yaml') unless defined? CONN
 #Listado de directorios a buscar
-DIRECTORIOS = YAML.load_file('directorios.yaml') unless defined? DIRECTORIOS
+DIR_LIST = YAML.load_file('directorios.yaml') unless defined? DIR_LIST
 
-serv = CONEXION['web01']
-puerto= CONEXION['puerto'].to_s
+serv = CONN['web01']
+port = CONN['puerto'].to_s
+user = 'root'
 
 
-DIRECTORIOS.each { |dir|
-  # Comprueba si existe directorio
-  }
+Net::SSH.start(serv, :port=>port, :username=>'root') do
+  DIR_LIST.each { |dir|
+    if Dir.exist?(dir) == false
+      puts 
+
+    end
+
+
+    }
+end
