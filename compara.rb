@@ -1,5 +1,7 @@
 require 'yaml'
-require ''
+require 'colorize'
+require 'net/ssh'
+
 # Arreglo de conexion
 CONN = YAML.load_file('servers.yaml') unless defined? CONN
 #Listado de directorios a buscar
@@ -10,11 +12,14 @@ port = CONN['puerto'].to_s
 user = 'root'
 
 
-Net::SSH.start(serv, :port=>port, :username=>'root') do
+Net::SSH.start(serv, :port=>port, :username=>'root') do |ssh|
   DIR_LIST.each { |dir|
     if Dir.exist?(dir) == false
-      puts 
-
+      print "[ELIMINAR] - ".red
+      puts "Directorio: #{dir} no existe"
+    else
+      print "[MANTENER] - ".green
+      puts "Directorio: #{dir} existe"
     end
 
 
