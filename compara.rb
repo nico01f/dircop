@@ -19,38 +19,88 @@ class ComparaDirOptions
     :long         => "--directories /path/to/directories.yaml",
     :description  => "yaml file with directories to compare",
     :default      => "directories.yaml"
+
+  option :user,
+    :short        => "-u root",
+    :long         => "--user root",
+    :description  => "username to ssh login",
+    :default      => "root"
+
+  option :port,
+    :short        => "-p 22",
+    :long         => "--port 22",
+    :description  => "ssh port for remote server",
+    :default      => "22"
+
+  option :path,
+    :long         => "--path /var/www",
+    :description  => "remote path to compare",
+    :default      => "/var/www"
+
+  option :verbose,
+    :short        => "-V",
+    :long         => "--verbose",
+    :description  => "debug"
+
+  option :help,
+    :short        => "-h",
+    :long         => "--help",
+    :description  => "Show this message",
+    :on           => :tail,
+    :boolean      => true,
+    :show_options => true,
+    :exit         => 0
 end
-#path = '/opt/autentia/www'
-#default_user = 'root'
-#default_port = '14225'
 
-options = ComparaDirOptions.new
-options.parse_options
+class Compara
 
-def run(options)
-  @servers.each do |web,srv|
-    Net::SSH.start(srv, options[:default_user], :port => options[:default_port]) do |ssh|
-      dirs.each { |dir|
-        output = ssh.exec!("[ -d #{path}/#{dir} ] && OK")
-        if output.include? "OK"
-          # Verbose mode
-          print "[#{web}] [INFO] - ".green
-          puts "Directorio coincide"
-        else
-          # Verbose mode
-          print "[#{web}] [WARN] - ".red
-          puts "Revisar directorio en: #{path}/#{dir}\n"
+  def initialize
+    arguments = ComparaDirOptions.new
+    arguments.parse_options
+    args = {
+      :directories  => arguments.config[:directories],
+      :servers      => arguments.config[:servers],
+      :port         => arguments.config[:port],
+      :user         => arguments.config[:user],
+      :path         => arguments.config[:path],
+      :verbose      => arguments.config[:verbose]
+    }
+    get_servers(args[:servers])
+    get_dirs(args[:directories])
+    run(args)
+  end
+
+  private
+
+    def run(options = {})
+      @servers.each do |k,v|
+        Net::SSH.start(v, options[:user], :port => options[:port]) do |ssh|
+          @dirs.each { |dir|
+            output = ssh.exec!("[ -d #{options[:path]}/#{dir} ] && OK")
+            if output.include? "OK"
+              print "[#{v}] [INFO] - ".green if options[:verbose]
+              puts "Directorio coincide" if options[:verbose]
+            else
+              print "[#{v}] [WARN] - ".red
+              puts "Revisar directorio en: #{options[:path]}/#{dir}\n"
+            end
+          }
         end
-      }
+      end
+
+    rescue Exception => error
+      puts error
+
     end
-  end
+
+    def get_servers(servers)
+      @servers ||= YAML.load_file(servers)
+    end
+
+    def get_dirs(dirs)
+      @dirs ||= YAML.load_file(dirs)
+    end
+
 end
 
-private
-  def servers
-    @servers ||= YAML.load_file(options.config[:servers])
-  end
-
-  def dirs
-    @dirs ||= YAML.load_files(options.config[:directories])
-  end
+Compara.new
