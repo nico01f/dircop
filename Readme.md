@@ -22,3 +22,7 @@ Usage: ./dircop.rb (options)
     -V, --verbose                    debug
     -h, --help                       Show this message
 ```
+
+## TO-DO
+- [ ] Make for files: example cgi-bin
+- [x] Convert to script
