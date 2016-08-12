@@ -11,7 +11,7 @@ Retrieve list of directories are different in servers. Useful if you want unsure
 `./dircop.rb -p 14225 --path /path/to/compare`
 
 ```
-Usage: ./compara.rb (options)
+Usage: ./dircop.rb (options)
     -d /path/to/directories.yaml,    yaml file with directories to compare
         --directories
         --path /var/www              remote path to compare
