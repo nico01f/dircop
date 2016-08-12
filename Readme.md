@@ -8,7 +8,7 @@ Retrieve list of directories are different in servers. Useful if you want unsure
 
 #### How tu use:
 
-`./compara.rb -p 14225 --path /path/to/compare`
+`./dircop.rb -p 14225 --path /path/to/compare`
 
 ```
 Usage: ./compara.rb (options)
