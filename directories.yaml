@@ -1,3 +1,5 @@
+# List of directories must be list in YAML format
+# - dir/
 - acepta/
 - admin_28.08.2014/
 - admin.malo/

@@ -1,4 +1,4 @@
-## TO-DO list
+## Dircop
 
 Retrieve list of directories are different in servers. Useful if you want unsure if files are replicated through servers.
 
