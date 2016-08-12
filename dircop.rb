@@ -78,10 +78,10 @@ class Compara
           @dirs.each { |dir|
             output = ssh.exec!("[ -d #{options[:path]}/#{dir} ] && OK")
             if output.include? "OK"
-              print "[#{v}] [OK] - ".green if options[:verbose]
+              print "[#{k}] [OK] - ".green if options[:verbose]
               puts "Directorio coincide" if options[:verbose]
             else
-              print "[#{v}] [CHECK] - ".red
+              print "[#{k}] [WARN] - ".red
               puts "Revisar directorio en: #{options[:path]}/#{dir}\n"
             end
           }
