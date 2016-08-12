@@ -38,7 +38,7 @@ class ComparaDirOptions
     :default      => "/var/www"
 
   option :verbose,
-    :short        => "-V",
+    :short        => "-v",
     :long         => "--verbose",
     :description  => "debug"
 
@@ -78,10 +78,10 @@ class Compara
           @dirs.each { |dir|
             output = ssh.exec!("[ -d #{options[:path]}/#{dir} ] && OK")
             if output.include? "OK"
-              print "[#{v}] [INFO] - ".green if options[:verbose]
+              print "[#{v}] [OK] - ".green if options[:verbose]
               puts "Directorio coincide" if options[:verbose]
             else
-              print "[#{v}] [WARN] - ".red
+              print "[#{v}] [CHECK] - ".red
               puts "Revisar directorio en: #{options[:path]}/#{dir}\n"
             end
           }

@@ -1,8 +1,24 @@
-# TO-DO list
+## TO-DO list
 
+Retrieve list of directories are different in servers. Useful if you want unsure if files are replicated through servers.
 
-`./compara.rb -servers /opt/servers.yaml -dirs /opt --verbose -port -user`
+*Files:*
+- servers.yaml : This file contains list of servers
+- directories.yaml : Contains list of directories
 
-#### Verbose mode
-- line 23
-- line 24
+#### How tu use:
+
+`./compara.rb -p 14225 --path /path/to/compare`
+
+```
+Usage: ./compara.rb (options)
+    -d /path/to/directories.yaml,    yaml file with directories to compare
+        --directories
+        --path /var/www              remote path to compare
+    -p, --port 22                    ssh port for remote server
+    -s /path/to/servers.yaml,        yaml file with servers
+        --servers
+    -u, --user root                  username to ssh login
+    -V, --verbose                    debug
+    -h, --help                       Show this message
+```
