@@ -31,5 +31,7 @@ Usage: ./dircop.rb (options)
 ```
 
 ## TO-DO
-- [ ] Make for files: example cgi-bin
+- [ ] Add for compare files: example cgi-bin
+- [ ] Split monolith model
+- [ ] zmprov like for autentia?
 - [x] Convert to script
