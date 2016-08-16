@@ -1,0 +1,25 @@
+# List of directories must be list in YAML format
+# Example: - dir/
+- cow.php
+- fo.php
+- monitor_wsdl.php
+- mon_mem.php
+- mon_ubc.php
+- sencecfg.php
+- test.php
+- top.php
+- validarut.php
+- wsadmusr4_wsdl.php
+- wsadmusr_wsdl2.php
+- wsadmusr_wsdl.php
+- wsauditnew_wsdl.php
+- wsaudit_wsdl.php
+- wsdocs2_wsdl.php
+- wsdocs_wsdl.php
+- wsenrolado_wsdl.php
+- wsident2_wsdl.php
+- wssensor_wsdl.php
+- wsinstit_wsdl.php
+- wspatron3_wsdl.php
+- wspersona_DEC_wsdl.php
+- wspersona_wsdl.php
