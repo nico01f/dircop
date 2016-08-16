@@ -12,13 +12,13 @@ class ComparaDirOptions
     :short        => "-s /path/to/servers.yaml",
     :long         => "--servers /path/to/servers.yaml",
     :description  => "yaml file with servers",
-    :default      => "servers.yaml"
+    :default      => "files/servers.yaml"
 
   option :directories,
     :short        => "-d /path/to/directories.yaml",
     :long         => "--directories /path/to/directories.yaml",
     :description  => "yaml file with directories to compare",
-    :default      => "directories.yaml"
+    :default      => "files/directories.yaml"
 
   option :user,
     :short        => "-u root",
